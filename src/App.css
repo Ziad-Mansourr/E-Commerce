@@ -43,3 +43,29 @@
 .active{
   color: #0c0;
 }
+
+.vip button{
+   background-color: #0e9f6e;
+   margin-left: 5px;
+   color: white;
+   /* height: 50px; 
+   border-radius: 50%; */
+}
+.vip button:hover{
+   background-color: #0e9f6e;
+   /* height: 50px; 
+   border-radius: 50%; */
+}
+.vip1 button{
+   background-color: #b0b2b6  ;
+   margin-right: 5px;
+   /* color: black; */
+   width: 100%;
+   /* height: 50px; 
+   border-radius: 50%; */
+}
+.vip1 button:hover{
+   background-color: #b0b2b6;
+   /* height: 50px; 
+   border-radius: 50%; */
+}
