@@ -3,28 +3,33 @@ import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom'
 import * as yp from 'yup'
 import axios from 'axios'
-import { userContext } from '../../../Context/UesrContext' 
+import { userContext } from '../../../Context/UesrContext'
 import { WishListContext } from '../../../Context/WishListContext'
 import { CartContext } from '../../../Context/CartContext'
 export default function Login() {
   let navigate = useNavigate();
   const [apiError, setApi] = useState('');
   const [load, setLoad] = useState(false);
-  let {getWish} = useContext(WishListContext);
-  let {getCart} = useContext(CartContext);
-  let {setUserLogin, login} = useContext(userContext);
+  let { setUserLogin, login } = useContext(userContext);
   let validationSchema = yp.object().shape({
     email: yp.string().email('email invalid').required('email is required'),
     password: yp.string().matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/, 'password is invalid').required('password is required')
   })
-
+  const [eye, setEye] = useState(false);
+  function showPass() {
+    if (!eye) {
+      setEye(true);
+    } else {
+      setEye(false);
+    }
+  }
   async function handleLogin(values) {
     setLoad(true);
-    let { data , response} = await login(values);
+    let { data, response } = await login(values);
     setLoad(false);
     if (data?.message == 'success') {
       localStorage.setItem('userToken', data?.token);
-      localStorage.setItem('userInfo' ,JSON.stringify(data));
+      localStorage.setItem('userInfo', JSON.stringify(data));
       setUserLogin(data?.token);
       navigate('/');
       window.location.reload();
@@ -70,7 +75,15 @@ export default function Login() {
           </div>
 
           <div className="relative z-0 w-full mb-10 group">
-            <input type="password" name="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} id="password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-500 peer" placeholder=" " />
+            <input type={eye ? "text" : "password"} name="password" value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} id="password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-500 peer" placeholder=" " />
+            <Link onClick={showPass} className='absolute top-3 right-2 p-0 '>
+              {
+                eye ?
+                  <i className="fa-solid fa-eye hover:text-green-400 transition-all duration-200"></i>
+                  :
+                  <i className="fa-solid fa-eye-slash hover:text-green-400 transition-all duration-200"></i>
+              }
+            </Link>
             {formik.errors.password != null && formik.touched.password ?
               <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                 <span class="font-medium">{formik.errors.password}</span>

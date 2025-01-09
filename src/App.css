@@ -57,7 +57,7 @@
    border-radius: 50%; */
 }
 .vip1 button{
-   background-color: #b0b2b6  ;
+   background-color: rgba(14, 159, 110, 1) ;
    margin-right: 5px;
    /* color: black; */
    width: 100%;
@@ -65,7 +65,7 @@
    border-radius: 50%; */
 }
 .vip1 button:hover{
-   background-color: #b0b2b6;
+   background-color: rgba(14, 159, 110, 1);
    /* height: 50px; 
    border-radius: 50%; */
 }

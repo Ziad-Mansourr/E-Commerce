@@ -76,8 +76,16 @@ export default function ProductDetailes() {
   }
 
   useEffect(() => {
-    getProductDetailes(id)
-    getRelatedProduct(category)
+    getProductDetailes(id);
+    getRelatedProduct(category);
+    const timeout = setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }, 600);
+  
+    return () => clearTimeout(timeout);
   }, [id, category])
   console.log(relatedProduct);
 
@@ -144,7 +152,7 @@ export default function ProductDetailes() {
               <span className='p-2'>{product.price} EGP</span>
               <span className='p-2'>{product.ratingsAverage} <i className='fa fa-star text-yellow-300' ></i></span>
             </div>
-            <button onClick={() => addCart(product.id)} className='relative hover:bg-green-400 hover:text-white top-[100px] group-hover:top-0 transition-all duration-[0.4s] w-full bg-transparent border-green-400 text-teal-700 mt-2'><i class="fa-solid fa-plus"></i> Add To Card</button>
+            <button onClick={() => addCart(product.id)} className='relative hover:bg-green-400 hover:text-white top-[100px] group-hover:top-0 transition-all duration-[0.4s] text-sm md:text-base w-full bg-transparent border-green-400 text-teal-700 mt-2'><i class="fa-solid fa-plus"></i> Add To Card</button>
           </div>
         )}
       </div>

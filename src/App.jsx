@@ -31,10 +31,10 @@ import ForgetPassword from './components/ForgetPassword/ForgetPassword'
 import VerifyEmail from './components/VerifyEmail/VerifyEmail'
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import "flowbite";
+import UpdatePassword from './components/UpdatePassword/UpdatePassword'
 function App() {
 
   const queryClient = new QueryClient()
-  // if(useLocation() == 'login' || useLocation() == 'Register'){} 
    
   let router = createBrowserRouter([
     {
@@ -55,6 +55,7 @@ function App() {
         { path: 'logout', element: <Logout /> },
         { path: 'verify', element: <VerifyEmail /> },
         { path: 'reset', element: <ResetPassword /> },
+        { path: 'updatePassword', element: <UpdatePassword /> },
         { path: 'forgetPassword', element: <ForgetPassword /> },
         { path: 'Register', element: <Register /> }
       ]

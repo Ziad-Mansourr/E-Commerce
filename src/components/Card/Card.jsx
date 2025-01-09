@@ -38,7 +38,7 @@ export default function Card() {
   }, [dataCart])
   return (
     <>
-      {(dataCart?.data?.products?.length > 0) ?
+      {(dataCart?.data?.products?.length != null) ?
         <div className="relative overflow-x-auto w-[90%] m-auto shadow-md sm:rounded-lg">
            <h1 className='mb-7 text-teal-700 col-span-12'>My Cart</h1>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

@@ -128,7 +128,7 @@ export default function Navbarr() {
             <>
               <div className="flex md:order-2 vip  md:me-0 ">
 
-                <div className="flex justify-between mr-[49px] md:mr-0 items-center px-4 ">
+                <div className="flex justify-between mr-[110px]  md:mr-0 items-center px-4 ">
                   <Link to={'/card'}>
                     <div className="indicator">
                       <svg
@@ -165,6 +165,9 @@ export default function Navbarr() {
                     <span className="block text-sm">{userLoginDe?.user?.name}</span>
                     <span className="block truncate text-sm font-medium">{userLoginDe?.user?.email}</span>
                   </Dropdown.Header>
+                  <div className="flex items-center text-gray-700 border border-t-0 border-x-0 mb-2 border-b-gray-300">
+                  <Link to={'/updatePassword'} className=" text-center px-4 py-2 text-sm text-green-500">Update Password</Link>
+                  </div>
                   <div className="flex justify-center items-center text-gray-700 vip1">
                   <button onClick={logout} className=" text-center px-4 py-2 text-sm ">Sign out</button>
                   </div>
@@ -172,13 +175,13 @@ export default function Navbarr() {
                 <Navbar.Toggle />
               </div>
               <Navbar.Collapse className=''>
-                <NavLink to={''} className="block py-2 px-3 text-lg font-medium text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 " >Home</NavLink>
+                <NavLink to={''} className="block py-2 px-3 text-lg font-normal text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 " >Home</NavLink>
 
-                <NavLink to={'products'} className="block py-2 px-3 text-lg font-medium text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 ">Product</NavLink>
+                <NavLink to={'products'} className="block py-2 px-3 text-lg font-normal text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 ">Product</NavLink>
 
-                <NavLink to={'category'} className="block py-2 px-3 text-lg font-medium text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 ">Category</NavLink>
+                <NavLink to={'category'} className="block py-2 px-3 text-lg font-normal text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 ">Category</NavLink>
 
-                <NavLink to={'brand'} className="block py-2 px-3 text-lg font-medium text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 ">Brands</NavLink>
+                <NavLink to={'brand'} className="block py-2 px-3 text-lg font-normal text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-green-500 md:p-0 ">Brands</NavLink>
 
               </Navbar.Collapse>
 
