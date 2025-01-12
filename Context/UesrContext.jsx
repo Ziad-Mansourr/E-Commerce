@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from 'react'
 export let userContext = createContext();
 export default function UesrContextProvider(props) {
     const [userLogin , setUserLogin] = useState(null);
-
+    const [search , setSearch] = useState('');
 
     function login(values){
      return axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signin`, values)
@@ -20,7 +20,7 @@ export default function UesrContextProvider(props) {
     },[userLogin])
   return (
     <>
-      <userContext.Provider value={{userLogin , setUserLogin , login}}>
+      <userContext.Provider value={{userLogin , setUserLogin , setSearch , search , login}}>
         {props.children}   
       </userContext.Provider>   
     </>

@@ -32,11 +32,12 @@ import VerifyEmail from './components/VerifyEmail/VerifyEmail'
 import ResetPassword from './components/ResetPassword/ResetPassword'
 import "flowbite";
 import UpdatePassword from './components/UpdatePassword/UpdatePassword'
+import Search from './components/Search/Search'
 function App() {
 
   const queryClient = new QueryClient()
    
-  let router = createBrowserRouter([
+  let router = createHashRouter([
     {
 
       path: '', element: <Layout />, children: [
@@ -50,6 +51,7 @@ function App() {
         { path: 'brand', element: <ProtectRouting><Brands /></ProtectRouting> },
         { path: 'wishList', element: <ProtectRouting><WishList /></ProtectRouting> },
         { path: 'details', element: <ProtectRouting><Details /></ProtectRouting> },
+        { path: 'search', element: <ProtectRouting><Search /></ProtectRouting> },
         { path: 'productDetailes/:id/:category', element: <ProtectRouting><ProductDetailes /></ProtectRouting> },
         { path: 'login', element: <Login /> },
         { path: 'logout', element: <Logout /> },

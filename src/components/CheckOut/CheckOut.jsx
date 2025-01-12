@@ -6,7 +6,7 @@ import axios from 'axios'
 import { CartContext } from '../../../Context/CartContext'
 export default function CheckOut() {
   let { checkOut, Cart } = useContext(CartContext);
-  // console.log(Cart);
+
 
   const [cartId, setCartId] = useState();
   const [url, setUrl] = useState();
@@ -24,7 +24,6 @@ export default function CheckOut() {
   async function checkout(cartId, url) {
     setLoad(true);
     let { data } = await checkOut(cartId, url, formik.values);
-    console.log(data);
     if(data?.status == 'success'){
       setLoad(false);
       location.href = data?.session?.url;
@@ -33,7 +32,7 @@ export default function CheckOut() {
 
   return (
     <>
-      <section className='w-[90%] text-start m-auto mt-8'>
+      <section className='md:w-[50%] w-[90%] text-start m-auto mt-8'>
         <form className="" onSubmit={formik.handleSubmit}>
 
           <div className="relative z-0 w-full mb-10 group">

@@ -8,7 +8,6 @@ import { CartContext } from '../../../Context/CartContext';
 export default function ProductDetailes() {
   let { id, category } = useParams();
   const { addToWishList, wish, deleteFromWish } = useContext(WishListContext);
-  console.log(category);
   let settings = {
     dots: true,
     infinite: true,
@@ -57,7 +56,6 @@ export default function ProductDetailes() {
     axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
       .then(({ data }) => {
         setProductDetailes(data.data);
-        console.log(data.data);
 
 
       }).catch((error) => {
@@ -87,7 +85,6 @@ export default function ProductDetailes() {
   
     return () => clearTimeout(timeout);
   }, [id, category])
-  console.log(relatedProduct);
 
 
   return (
@@ -99,7 +96,7 @@ export default function ProductDetailes() {
         <div className="w-[100%] md:w-[30%] mb-8 shadow-md">
           {/* <img src= {productDetailes?.imageCover} className='w-full shadow-lg' alt="" /> */}
           <Slider {...settings} className='m-auto '>
-            {productDetailes?.images?.map((src) => <img src={src} className='w-full ' alt="" />)}
+            {productDetailes?.images?.map((src) => <img  src={src} className='w-full ' alt="" />)}
           </Slider>
 
         </div>
@@ -109,7 +106,7 @@ export default function ProductDetailes() {
             <h2 className='text-green-400  text-3xl'>{productDetailes.title}</h2>
             <div className="bg-slate-600 relative top-0 left-0 ">
             {(wish?.data != "") ? wish?.data?.map((products) => (products.id == id) ?
-              <button onClick={() => deleteWish(id)} className='z-10 absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
+              <button onClick={() => deleteWish(id)}  className='z-10 absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
               :
               <button onClick={() => addWish(id)} className='absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
             )
@@ -124,8 +121,8 @@ export default function ProductDetailes() {
             <span className='pt-2 font-bold'>{productDetailes.price} EGP</span>
             <span className='p-2 mr-3'>{productDetailes.ratingsAverage} <i className='fa fa-star text-yellow-300' ></i></span>
           </div>
-          <div className="">
-            <button onClick={() => addCart(id)} className=' hover:bg-green-400 hover:text-white w-full transition-all duration-[0.4s] px-8 bg-transparent border-green-400 text-teal-700 mt-2'><i className="fa-solid fa-plus"></i> Add To Card</button>
+          <div className="flex justify-center">
+            <button onClick={() => addCart(id)} className=' hover:bg-green-400 hover:text-white w-full lg:w-[40%] md:w-[60%]  transition-all duration-[0.4s] px-8 bg-transparent border-green-400 text-teal-700 mt-2'><i className="fa-solid fa-plus"></i> Add To Card</button>
           </div>
         </div>
       </div>
@@ -139,12 +136,12 @@ export default function ProductDetailes() {
               <img loading='lazy' src={product.imageCover} className='w-full' alt="" />
             </Link>
             {(wish?.data != "") ? wish?.data?.map((products) => (products.id == product.id) ?
-              <button onClick={() => deleteWish(product.id)} className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
+              <button onClick={() => deleteWish(product.id)} key={products.id} className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
               :
-              <button onClick={() => addWish(product.id)} className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
+              <button onClick={() => addWish(product.id)} key={products.id}  className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
             )
               :
-              <button onClick={() => addWish(product.id)} className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
+              <button onClick={() => addWish(product.id)}  className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
             }
             <h3 className='text-green-400 text-left px-2'  >{product.category.name}</h3>
             <h4 className='text-left px-2'>{product.title.split(' ').slice(0, 2).join(' ')}</h4>
@@ -159,7 +156,8 @@ export default function ProductDetailes() {
     </>
     :
     <div className="flex justify-center min-h-screen fixed top-0 left-0 right-0 bottom-0 bg-white items-center">
-    <span class="loader text-4xl"></span>
+   <span className="loader text-4xl" />
+
     </div>
     }
 

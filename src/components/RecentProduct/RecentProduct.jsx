@@ -45,7 +45,8 @@ export default function RecentProduct() {
   let x = useCategory();
   if (isLoading || x.isLoading) {
     return  <div className="flex justify-center min-h-screen fixed top-0 left-0 right-0 bottom-0 bg-white items-center">
-    <span class="loader text-4xl"></span>
+    <span className="loader text-4xl" />
+
     </div>
   }
   return (
@@ -57,9 +58,9 @@ export default function RecentProduct() {
               <img loading='lazy' src={product.imageCover} className='w-full' alt="" />
             </Link>
             {(wish?.data != "")? wish?.data?.map((products) => ( products.id == product.id) ? 
-              <button onClick={() => deleteWish(product.id)}  className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i  className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
+              <button onClick={() => deleteWish(product.id)} className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i  className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
               :
-              <button onClick={() => addWish(product.id)} className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
+              <button onClick={() => addWish(product.id)}  className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
             )
             :
             <button onClick={() => addWish(product.id)} className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>

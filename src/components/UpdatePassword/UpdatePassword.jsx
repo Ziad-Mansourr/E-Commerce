@@ -82,12 +82,12 @@ export default function UpdatePassword() {
 
   return (
     <>
-    <section className='w-[90%] text-start m-auto mt-8'>
+    <section className='md:w-[50%] w-[90%] text-start m-auto mt-8'>
       <h2 className='mb-5 text-3xl font-bold'><i className='fa-solid fa-id-card mr-3 text-green-500'></i> Change password</h2>
       <form className="" onSubmit={formik.handleSubmit}>
         {apiError != '' ?
-          <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-            <span class="font-medium">{apiError}</span>
+          <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span className="font-medium">{apiError}</span>
           </div>
           : null
         }
@@ -103,8 +103,8 @@ export default function UpdatePassword() {
               }
           </Link>
           {formik.errors.currentPassword != null && formik.touched.currentPassword ?
-            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-              <span class="font-medium">{formik.errors.currentPassword}</span>
+            <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+              <span className="font-medium">{formik.errors.currentPassword}</span>
             </div> : null}
           <label htmlFor="currentPassword" className="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-xl rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-green-500 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Current Password</label>
         </div>
@@ -119,8 +119,8 @@ export default function UpdatePassword() {
               }
           </Link>
           {formik.errors.password != null && formik.touched.password ?
-            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-              <span class="font-medium">{formik.errors.password}</span>
+            <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+              <span className="font-medium">{formik.errors.password}</span>
             </div> : null}
           <label htmlFor="password" className="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-xl rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-green-500 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
         </div>
@@ -135,8 +135,8 @@ export default function UpdatePassword() {
               }
           </Link>
           {formik.errors.rePassword != null && formik.touched.rePassword ?
-            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-              <span class="font-medium">{formik.errors.rePassword}</span>
+            <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+              <span className="font-medium">{formik.errors.rePassword}</span>
             </div> : null}
           <label htmlFor="rePassword" className="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-xl rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-green-500 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">rePassword</label>
         </div>

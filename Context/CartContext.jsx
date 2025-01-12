@@ -25,6 +25,11 @@ function deleteCart(id){
   .then((response)=>response)
   .catch((error)=>error)
 }
+function deleteUserCart(){
+  return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,{headers})
+  .then((response)=>response)
+  .catch((error)=>error)
+}
 function updateCart(id , count){
   return axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
     {count:count},
@@ -54,7 +59,7 @@ useEffect(()=>{
 },[Cart])
     return (
         <>
-          <CartContext.Provider value={{Cart , checkOut, getCart ,setCart,  addToCart , displayCart , deleteCart , updateCart}}>
+          <CartContext.Provider value={{Cart , checkOut, getCart ,setCart,  addToCart , displayCart , deleteUserCart , deleteCart , updateCart}}>
             {props.children}
           </CartContext.Provider>
         </>
