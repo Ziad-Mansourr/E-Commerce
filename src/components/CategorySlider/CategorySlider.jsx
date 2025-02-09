@@ -1,10 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+
 import Slider from "react-slick";
 import useCategory from '../Hooks/useCategory';
 export default function CategorySlider() {
-  const [category, setCategory] = useState(null);
   let settings = {
     dots: false,
     infinite: true,
@@ -42,7 +39,7 @@ let {data} = useCategory();
     <>
 
           <Slider className='my-10 pb-2 w-[83%] md:w-[90%] m-auto'  {...settings}>
-            {data?.data?.data?.map((porduct) => <img key={porduct?._id} className='h-[280px] w-full'  src={porduct?.image} alt="" />)}
+            {data?.data?.data?.map((porduct) => <img loading="lazy" key={porduct?._id} className='h-[280px] w-full'  src={porduct?.image} alt={porduct.name} />)}
           </Slider>
     </>
   )

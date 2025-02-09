@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext} from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { userContext } from '../../../Context/UesrContext'
 import { CartContext } from '../../../Context/CartContext'
-import { WishListContext } from '../../../Context/WishListContext'
-import { Avatar, Dropdown, Navbar, FloatingLabel } from "flowbite-react";
+import {Dropdown, Navbar } from "flowbite-react";
 import { useFormik } from 'formik'
-import useProduct from '../Hooks/useProduct'
 export default function Navbarr() {
   let { Cart } = useContext(CartContext);
-  let { wish } = useContext(WishListContext);
   let navigate = useNavigate();
   let { userLogin, setUserLogin , setSearch} = useContext(userContext);
   let x = localStorage.getItem('userInfo');

@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 export default function Card() {
   let { displayCart, deleteCart, updateCart, deleteUserCart } = useContext(CartContext);
   const [dataCart, setDataCart] = useState(null);
-  let count = 0;
   async function display() {
     let { data } = await displayCart();
     setDataCart(data);
@@ -57,7 +56,7 @@ export default function Card() {
               <div key={product.product.id} className="flex flex-wrap items-center p-3  justify-between">
                 <div className=" w-[100%] lg:w-[55%]  flex flex-nowrap items-center">
                   <div className="w-[35%] md:w-[15%] lg:w-[20%] ">
-                    <img src={product.product.imageCover} alt={product.product.title} className='' />
+                    <img loading='lazy' src={product.product.imageCover} alt={product.product.title} className='' />
                   </div>
                   <p className='pl-14 font-medium'>	{product.product.title}</p>
                 </div>

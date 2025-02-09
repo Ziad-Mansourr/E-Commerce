@@ -1,9 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import React from 'react'
+import axiosInstance from '../../services/axiosInstance';
 export default function useCategory() {
     function getData(){
-        return axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
+        return axiosInstance.get(`categories`);
     }
       let apiRes = useQuery({
         queryKey:['recentCategory'],

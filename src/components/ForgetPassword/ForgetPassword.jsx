@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import * as yp from 'yup'
-import axios from 'axios'
-import { userContext } from '../../../Context/UesrContext'
+import axiosInstance from '../../services/axiosInstance'
 export default function ForgetPassword() {
   let navigate = useNavigate();
   const [apiError, setApi] = useState('');
@@ -17,7 +16,7 @@ export default function ForgetPassword() {
 
   async function handleRegister(values) {
     setLoad(true)
-    axios.post(`https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords`, values)
+    axiosInstance.post(`auth/forgotPasswords`, values)
       .then(
         (apiRes) => {
           setLoad(false);

@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom'
 import * as yp from 'yup'
-import axios from 'axios'
-import { userContext } from '../../../Context/UesrContext'
+import axiosInstance from '../../services/axiosInstance'
 export default function ResetPassword() {
   let navigate = useNavigate();
   const [apiError, setApi] = useState('');
   const [load, setLoad] = useState(false);
-  let { setUserLogin } = useContext(userContext);
   let validationSchema = yp.object().shape({
     email: yp.string().email('email invalid').required('email is required'),
     newPassword: yp.string().matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/, 'password is invalid').required('password is required'),
@@ -25,7 +23,7 @@ export default function ResetPassword() {
   }
   async function handleRegister(values) {
     setLoad(true)
-    axios.put(`https://ecommerce.routemisr.com/api/v1/auth/resetPassword`, values)
+    axiosInstance.put(`auth/resetPassword`, values)
       .then(
         (apiRes) => {
           // localStorage.setItem('userInfo' ,JSON.stringify(apiRes.data));

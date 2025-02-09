@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext, useState } from 'react'
 import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom'
 import * as yp from 'yup'
-import axios from 'axios'
 import { userContext } from '../../../Context/UesrContext'
+import axiosInstance from '../../services/axiosInstance'
 export default function UpdatePassword() {
   let navigate = useNavigate();
   const [apiError, setApi] = useState('');
@@ -49,7 +49,7 @@ export default function UpdatePassword() {
 
   async function handleRegister(values) {
     setLoad(true)
-    axios.put(`https://ecommerce.routemisr.com/api/v1/users/changeMyPassword`, values , {headers})
+    axiosInstance.put(`users/changeMyPassword`, values , {headers})
       .then(
         (apiRes) => {
           localStorage.setItem('userToken', apiRes.data.token);

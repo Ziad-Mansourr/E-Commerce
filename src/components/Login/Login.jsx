@@ -1,11 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom'
 import * as yp from 'yup'
-import axios from 'axios'
 import { userContext } from '../../../Context/UesrContext'
-import { WishListContext } from '../../../Context/WishListContext'
-import { CartContext } from '../../../Context/CartContext'
 export default function Login() {
   let navigate = useNavigate();
   const [apiError, setApi] = useState('');

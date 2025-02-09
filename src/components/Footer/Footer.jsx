@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast';
 export default function Footer() {
@@ -36,13 +36,13 @@ export default function Footer() {
           <div className="md:flex justify-between">
             <div className="md:flex w-1/2 gap-2 items-center">
               <h2 className='font-bold'>Payment Methods :</h2>
-              <img src="master-D--evCMi.jpg" className='w-[65%] md:w-[45%] lg:w-[15%]' alt="" />
-              <img src="download.png" className='w-[65%] md:w-[45%] lg:w-[15%]' alt="" />
-              <img src="amazon-BcHVa_T1.jpg" className='w-[65%] md:w-[45%] lg:w-[15%]' alt="" />
+              <img src="master-D--evCMi.jpg" className='w-[65%] md:w-[45%] lg:w-[15%]' alt="MasterCard" />
+              <img src="download.png" className='w-[65%] md:w-[45%] lg:w-[15%]' alt="PayPal" />
+              <img src="amazon-BcHVa_T1.jpg" className='w-[65%] md:w-[45%] lg:w-[15%]' alt="Amazon" />
             </div>
             <Link to={'https://play.google.com/store/games?hl=en&pli=1'} target='_blank' className='flex items-center justify-start md:justify-end pt-6  pr-2'>
               <h2 className='font-bold'>Get App Now On</h2>
-              <img src="appstore-CZUftfcT.webp" className='w-[25%] md:w-[15%] lg:w-[11%] ' alt="" />
+              <img src="appstore-CZUftfcT.webp" className='w-[25%] md:w-[15%] lg:w-[11%] ' alt="App Store" />
             </Link>
           </div>
         </div>

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createContext, useEffect, useState } from "react"
+import axiosInstance from "../src/services/axiosInstance";
 export let WishListContext = createContext();
 export function WishListContextProvider(props){
 
@@ -9,20 +9,20 @@ export function WishListContextProvider(props){
     }
 
     function addToWishList(id){
-        return axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+        return axiosInstance.post(`wishlist`,
             {productId:id},
-            {headers}
+            {headers:headers}
         ).then((response)=>response)
         .catch((error)=>error)
     }
     function getWishList(){
-        return axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+        return axiosInstance.get(`wishlist`,
             {headers}
         ).then((response)=>response)
         .catch((error)=>error)
     }
     function deleteFromWish(id){
-        return axios.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${id}`,
+        return axiosInstance.delete(`wishlist/${id}`,
             {headers}
         ).then((response)=>response)
         .catch((error)=>error)
@@ -39,6 +39,7 @@ export function WishListContextProvider(props){
           getWish()   
         },[wish])
     return <WishListContext.Provider value={{addToWishList  ,getWish,setWish, getWishList , wish , deleteFromWish}}>
+        {/* eslint-disable-next-line react/prop-types */}
         {props.children}
     </WishListContext.Provider>
 }

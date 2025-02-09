@@ -1,15 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Formik, useFormik } from 'formik'
-import { Link, useNavigate } from 'react-router-dom'
-import * as yp from 'yup'
-import axios from 'axios'
+import { useContext, useState } from 'react'
+import { useFormik } from 'formik'
 import { CartContext } from '../../../Context/CartContext'
 export default function CheckOut() {
   let { checkOut, Cart } = useContext(CartContext);
 
-
-  const [cartId, setCartId] = useState();
-  const [url, setUrl] = useState();
   const [load, setLoad] = useState(false);
   let formik = useFormik(
     {

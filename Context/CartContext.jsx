@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
+import axiosInstance from '../src/services/axiosInstance';
 export let CartContext = createContext();
 export default function CartContextProvider(props) {
   const [Cart , setCart] = useState(null);
@@ -7,7 +7,7 @@ export default function CartContextProvider(props) {
         token: localStorage.getItem('userToken'),
     }
 function  addToCart(productId){
-  return axios.post(`https://ecommerce.routemisr.com/api/v1/cart` , 
+  return axiosInstance.post(`cart` , 
     {productId:productId},
     {headers}
 ).then((response)=>response)
@@ -15,23 +15,23 @@ function  addToCart(productId){
 }
 
 function displayCart(){
-    return axios.get(`https://ecommerce.routemisr.com/api/v1/cart`,{headers})
+    return axiosInstance.get(`cart`,{headers})
     .then((response)=>response)
     .catch((error)=>error)
 }
 
 function deleteCart(id){
-  return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,{headers})
+  return axiosInstance.delete(`cart/${id}`,{headers})
   .then((response)=>response)
   .catch((error)=>error)
 }
 function deleteUserCart(){
-  return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,{headers})
+  return axiosInstance.delete(`cart`,{headers})
   .then((response)=>response)
   .catch((error)=>error)
 }
 function updateCart(id , count){
-  return axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
+  return axiosInstance.put(`cart/${id}`,
     {count:count},
     {headers},
   )
@@ -48,7 +48,7 @@ async function getCart(){
 }
 
 function checkOut(cardId , url , formValue){
-  return axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cardId}?url=${url}` , 
+  return axiosInstance.post(`orders/checkout-session/${cardId}?url=${url}` , 
     {shippingAddress:formValue},
     {headers},
   )
@@ -60,6 +60,7 @@ useEffect(()=>{
     return (
         <>
           <CartContext.Provider value={{Cart , checkOut, getCart ,setCart,  addToCart , displayCart , deleteUserCart , deleteCart , updateCart}}>
+           {/* eslint-disable-next-line react/prop-types */}
             {props.children}
           </CartContext.Provider>
         </>

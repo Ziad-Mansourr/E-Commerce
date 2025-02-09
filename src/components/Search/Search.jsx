@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { userContext } from '../../../Context/UesrContext'
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../../Context/CartContext';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import useProduct from '../Hooks/useProduct';
 import { WishListContext } from '../../../Context/WishListContext';
 export default function Search() {
@@ -58,7 +58,7 @@ export default function Search() {
           filter?.map((product) =>
             <div key={product.id} className="relative group col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2  overflow-hidden  hover:scale-[1.059] duration-300 rounded-lg shadow-lg p-3 my-2 border-gray-400">
               <Link to={`/productDetailes/${product.id}/${product.category.name}`}>
-                <img loading='lazy' src={product.imageCover} className='w-full' alt="" />
+                <img loading='lazy' src={product.imageCover} className='w-full' alt={product.title} />
               </Link>
               {(wish?.data != "") ? wish?.data?.map((products) => (products.id == product.id) ?
                 <button onClick={() => deleteWish(product.id)} className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
@@ -81,7 +81,7 @@ export default function Search() {
           <div className='col-span-12 '>
             <h1 className='text-4xl'>No Product Found with this Name .</h1>
             <div className="flex justify-center">
-            <img src="error-B1_ZqxX0.svg" alt="" />
+            <img src="error-B1_ZqxX0.svg" alt="Error 404" />
             </div>
           </div>
         }

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import useCategory from '../Hooks/useCategory'
 import { Link } from 'react-router-dom';
 export default function Category() {
@@ -16,7 +15,7 @@ export default function Category() {
 
         {data?.data?.data?.map((product) =>
           <div key={product._id} className="col-span-12 p-3 md:col-span-4 group relative lg:col-span-2 overflow-hidden bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <img className="rounded-lg h-[380px] md:h-[250px] w-full" src={product.image} alt='' />
+            <img loading='lazy' className="rounded-lg h-[380px] md:h-[250px] w-full" src={product.image} alt={product.name} />
             <Link to={`/categoryDetails/${product._id}/${product.name}`}>
               <div className="">
                 <h3 className='text-blue-400'>{product.name}</h3>

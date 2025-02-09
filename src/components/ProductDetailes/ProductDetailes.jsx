@@ -1,11 +1,12 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Slider from "react-slick";
 import { WishListContext } from '../../../Context/WishListContext';
 import toast from 'react-hot-toast';
 import { CartContext } from '../../../Context/CartContext';
+import axiosInstance from '../../services/axiosInstance';
 export default function ProductDetailes() {
+  let count = 0;
   let { id, category } = useParams();
   const { addToWishList, wish, deleteFromWish } = useContext(WishListContext);
   let settings = {
@@ -53,23 +54,23 @@ export default function ProductDetailes() {
   const [productDetailes, setProductDetailes] = useState([]);
   const [relatedProduct, setrelatedProduct] = useState([]);
   function getProductDetailes(id) {
-    axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
+    axiosInstance.get(`products/${id}`)
       .then(({ data }) => {
         setProductDetailes(data.data);
 
 
       }).catch((error) => {
-
+          setProductDetailes(error);
       })
   }
   function getRelatedProduct(category) {
-    axios.get(`https://ecommerce.routemisr.com/api/v1/products`)
+    axiosInstance.get(`products`)
       .then(({ data }) => {
         let allProduct = data.data
         let filterProduct = allProduct.filter((product) => product.category.name == category)
         setrelatedProduct(filterProduct);
       }).catch((error) => {
-
+        setrelatedProduct(error);
       })
   }
 
@@ -96,7 +97,7 @@ export default function ProductDetailes() {
         <div className="w-[100%] md:w-[30%] mb-8 shadow-md">
           {/* <img src= {productDetailes?.imageCover} className='w-full shadow-lg' alt="" /> */}
           <Slider {...settings} className='m-auto '>
-            {productDetailes?.images?.map((src) => <img  src={src} className='w-full ' alt="" />)}
+            {productDetailes?.images?.map((src) => <img loading='lazy' key={count++} src={src} className='w-full ' alt="Product Image" />)}
           </Slider>
 
         </div>
@@ -106,9 +107,9 @@ export default function ProductDetailes() {
             <h2 className='text-green-400  text-3xl'>{productDetailes.title}</h2>
             <div className="bg-slate-600 relative top-0 left-0 ">
             {(wish?.data != "") ? wish?.data?.map((products) => (products.id == id) ?
-              <button onClick={() => deleteWish(id)}  className='z-10 absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
+              <button key={id} onClick={() => deleteWish(id)}  className='z-10 absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
               :
-              <button onClick={() => addWish(id)} className='absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
+              <button key={id} onClick={() => addWish(id)} className='absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
             )
               :
               <button onClick={() => addWish(id)} className='absolute  transition-all duration-[.4s] -top-2 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
@@ -133,12 +134,12 @@ export default function ProductDetailes() {
         {relatedProduct?.map((product) =>
           <div key={product.id} className="relative group col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2  overflow-hidden  hover:scale-[1.059] duration-300 rounded-lg shadow-lg p-3 my-2 border-gray-400">
             <Link to={`/productDetailes/${product.id}/${product.category.name}`}>
-              <img loading='lazy' src={product.imageCover} className='w-full' alt="" />
+              <img loading='lazy' src={product.imageCover} className='w-full' alt={product.title} />
             </Link>
             {(wish?.data != "") ? wish?.data?.map((products) => (products.id == product.id) ?
-              <button onClick={() => deleteWish(product.id)} key={products.id} className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
+              <button onClick={() => deleteWish(product.id)} className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
               :
-              <button onClick={() => addWish(product.id)} key={products.id}  className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
+              <button onClick={() => addWish(product.id)} className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
             )
               :
               <button onClick={() => addWish(product.id)}  className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
@@ -149,7 +150,7 @@ export default function ProductDetailes() {
               <span className='p-2'>{product.price} EGP</span>
               <span className='p-2'>{product.ratingsAverage} <i className='fa fa-star text-yellow-300' ></i></span>
             </div>
-            <button onClick={() => addCart(product.id)} className='relative hover:bg-green-400 hover:text-white top-[100px] group-hover:top-0 transition-all duration-[0.4s] text-sm md:text-base w-full bg-transparent border-green-400 text-teal-700 mt-2'><i class="fa-solid fa-plus"></i> Add To Card</button>
+            <button key={product.id} onClick={() => addCart(product.id)} className='relative hover:bg-green-400 hover:text-white top-[100px] group-hover:top-0 transition-all duration-[0.4s] text-sm md:text-base w-full bg-transparent border-green-400 text-teal-700 mt-2'><i className="fa-solid fa-plus"></i> Add To Card</button>
           </div>
         )}
       </div>

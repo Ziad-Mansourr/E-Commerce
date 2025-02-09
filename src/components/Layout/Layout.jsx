@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import Footer from './../Footer/Footer';
 import { Outlet } from 'react-router-dom';
 import { userContext } from '../../../Context/UesrContext';
 import Navbarr from '../Navbarr/Navbarr';
 
 export default function Layout() {
-  let { userLogin, setUserLogin } = useContext(userContext);
+  let { userLogin} = useContext(userContext);
   return (
     <>
 

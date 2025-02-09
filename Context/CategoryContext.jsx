@@ -1,15 +1,16 @@
-import axios from 'axios';
-import React, { createContext, useEffect, useState } from 'react'
+import  { createContext} from 'react'
+import axiosInstance from '../src/services/axiosInstance';
 export let CategoryContext = createContext();
 export default function CategoryContextProvider(props) {
     function getCategory(id){
-        return axios.get(`https://ecommerce.routemisr.com/api/v1/categories/${id}`)
+        return axiosInstance.get(`categories/${id}`)
         .then((response)=> response)
         .catch((error)=>error)
     }
     return (
         <>
             <CategoryContext.Provider value={{getCategory}}>
+                {/* eslint-disable-next-line react/prop-types */}
                 {props.children}
             </CategoryContext.Provider>
         </>
