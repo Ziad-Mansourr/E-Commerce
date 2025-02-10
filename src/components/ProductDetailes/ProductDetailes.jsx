@@ -1,4 +1,4 @@
-import  { useContext, useEffect, useState } from 'react'
+import  { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Slider from "react-slick";
 import { WishListContext } from '../../../Context/WishListContext';
@@ -9,6 +9,10 @@ export default function ProductDetailes() {
   let count = 0;
   let { id, category } = useParams();
   const { addToWishList, wish, deleteFromWish } = useContext(WishListContext);
+  const isProductInWishlist = useMemo(
+    () => (id) => wish?.data?.some((product) => product.id === id),
+    [wish]
+  );
   let settings = {
     dots: true,
     infinite: true,
@@ -19,26 +23,26 @@ export default function ProductDetailes() {
     autoplaySpeed: 1000,
   };
   const { addToCart } = useContext(CartContext);
-  async function addWish(id) {
-    let { data } = await addToWishList(id);
-   
-      toast.loading('Adding Product To WishList');
-      setTimeout(()=>{
-        if (data?.status == 'success') {
+  async function handleWishlist(id) {
+    if (isProductInWishlist(id)) {
+      let { data } = await deleteFromWish(id);
+      toast.loading("Removing Product From WishList");
+      setTimeout(() => {
+        if (data?.status === "success") {
           toast.dismiss();
           toast.success(data?.message);
         }
-      },800)
-    }
-    async function deleteWish(id) {
-      let { data } = await deleteFromWish(id);
-      toast.loading('Removing Product From WishList');
-      setTimeout(()=>{
-        if (data?.status == 'success') {
+      }, 800);
+    } else {
+      let { data } = await addToWishList(id);
+      toast.loading("Adding Product To WishList");
+      setTimeout(() => {
+        if (data?.status === "success") {
           toast.dismiss();
-          toast.success(data?.message)
+          toast.success(data?.message);
         }
-      },800)
+      }, 800);
+    }
   }
   
   async function addCart(id) {
@@ -51,32 +55,35 @@ export default function ProductDetailes() {
       }
     },800)
   }
+  const [allProducts, setAllProducts] = useState([]);
   const [productDetailes, setProductDetailes] = useState([]);
   const [relatedProduct, setrelatedProduct] = useState([]);
-  function getProductDetailes(id) {
+  const getProductDetailes = useCallback((id) => {
     axiosInstance.get(`products/${id}`)
       .then(({ data }) => {
         setProductDetailes(data.data);
-
-
-      }).catch((error) => {
-          setProductDetailes(error);
       })
-  }
-  function getRelatedProduct(category) {
+      .catch((error) => {
+        setProductDetailes(error);
+      });
+  }, []);
+  function getRelatedProduct() {
     axiosInstance.get(`products`)
       .then(({ data }) => {
-        let allProduct = data.data
-        let filterProduct = allProduct.filter((product) => product.category.name == category)
-        setrelatedProduct(filterProduct);
+         setAllProducts(data.data);
+        
       }).catch((error) => {
-        setrelatedProduct(error);
+        console.error("Error fetching products:", error);
       })
   }
+
+  const relatedProducts = useMemo(() => {
+    return allProducts.filter((product) => product.category.name === category);
+  }, [allProducts, category]);
 
   useEffect(() => {
     getProductDetailes(id);
-    getRelatedProduct(category);
+    getRelatedProduct();
     const timeout = setTimeout(() => {
       window.scrollTo({
         top: 0,
@@ -85,12 +92,11 @@ export default function ProductDetailes() {
     }, 600);
   
     return () => clearTimeout(timeout);
-  }, [id, category])
-
+  }, [id  , getProductDetailes]);
 
   return (
     <>
-    {(relatedProduct?.length > 0)
+    {(relatedProducts?.length > 0)
     ?
     <>
       <div className="flex w-[90%] m-auto items-center flex-wrap md:flex-nowrap justify-start md:justify-between p-5">
@@ -131,19 +137,17 @@ export default function ProductDetailes() {
         <div className="col-span-12 flex justify-center">
         <h1 className=' text-4xl font-bold border-b-4 pb-5 text-center  border-b-green-500'>Related Product</h1>
         </div>
-        {relatedProduct?.map((product) =>
+        {relatedProducts?.map((product) =>
           <div key={product.id} className="relative group col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2  overflow-hidden  hover:scale-[1.059] duration-300 rounded-lg shadow-lg p-3 my-2 border-gray-400">
             <Link to={`/productDetailes/${product.id}/${product.category.name}`}>
               <img loading='lazy' src={product.imageCover} className='w-full' alt={product.title} />
             </Link>
-            {(wish?.data != "") ? wish?.data?.map((products) => (products.id == product.id) ?
-              <button onClick={() => deleteWish(product.id)} className='z-10 absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-solid fa-heart text-2xl  text-green-400" /> </button>
-              :
-              <button onClick={() => addWish(product.id)} className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
-            )
-              :
-              <button onClick={() => addWish(product.id)}  className='absolute group-hover:right-6  transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent'><i className="fa-regular fa-heart text-2xl  text-green-400" />  </button>
-            }
+            <button
+              onClick={() => handleWishlist(product.id)}
+              className="absolute group-hover:right-6 transition-all duration-[.4s] top-6 -right-10 p-0 bg-transparent"
+            >
+              <i className={`fa-${isProductInWishlist(product.id) ? "solid" : "regular"} fa-heart text-2xl text-green-400`} />
+            </button>
             <h3 className='text-green-400 text-left px-2'  >{product.category.name}</h3>
             <h4 className='text-left px-2'>{product.title.split(' ').slice(0, 2).join(' ')}</h4>
             <div className="flex justify-between">

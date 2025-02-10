@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { CartContext } from '../../../Context/CartContext';
 import { WishListContext } from '../../../Context/WishListContext';
 import toast from 'react-hot-toast';
@@ -6,21 +6,25 @@ export default function WishList() {
   const { addToCart } = useContext(CartContext);
   const { getWishList, deleteFromWish } = useContext(WishListContext);
   const [disWish, setDisWish] = useState(null);
-  async function displayWish() {
+  const displayWish = useCallback(async () => {
     let { data } = await getWishList();
     setDisWish(data);
-  }
+  }, [getWishList]);
   async function deleteWish(id) {
     let { data } = await deleteFromWish(id);
     toast.loading('Removing Product From WishList');
-    if (data?.status == 'success') {
+    
+    if (data?.status === 'success') {
       setTimeout(() => {
         toast.dismiss();
-        toast.success(data?.message)
-      }, 600)
+        toast.success(data?.message);
+        setDisWish((prev) => ({
+          ...prev,
+          data: prev?.data?.filter((product) => product.id !== id),
+        }));
+      }, 600);
     }
   }
-
   async function addCart(id) {
     let { data } = await addToCart(id);
     toast.loading('Adding Product To Cart');
@@ -32,8 +36,8 @@ export default function WishList() {
     }, 800)
   }
   useEffect(() => {
-    displayWish()
-  }, [disWish])
+    displayWish();
+  }, [displayWish]);
   return (
     <>
       {(disWish?.data?.length) ?
